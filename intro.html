@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pippostyles</title>
+  <meta name="description" content="pippostyles logo animation">
+  
+  <link rel="stylesheet" href="/src/pippostyles-intro.css">
+  <script src="/assets/vendor/gsap.min.js"></script>
+</head>
+<body>
+  <div id="intro-container"></div>
+
+  <script type="module">
+    import { PippostylesIntro } from '/src/pippostyles-intro.js';
+
+    const intro = new PippostylesIntro({
+      container: document.getElementById('intro-container'),
+      autoTransition: true,
+      transitionDelay: 1000,
+      soundEnabled: true,
+      onComplete: () => {
+        window.location.href = '/';
+      }
+    });
+    window.introInstance = intro;
+  </script>
+</body>
+</html>

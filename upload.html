@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MM Gallery - Mobile Photo Sync &amp; Card Editor</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: #06060c;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 4px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: #1500E1;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .brand-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.2px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(52, 199, 89, 0.15);
+      border: 1px solid rgba(52, 199, 89, 0.3);
+      color: #34c759;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #34c759;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #34c759;
+    }
+    .hero-card {
+      background: #0f0e1a;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.5;
+    }
+    .file-input {
+      display: none;
+    }
+    .picker-btn {
+      background: #1500E1;
+      color: #fff;
+      border: none;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(21, 0, 225, 0.4);
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .picker-btn:active {
+      transform: scale(0.98);
+      background: #1100b8;
+    }
+    .queue-section {
+      background: #0f0e1a;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .queue-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .queue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .queue-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #171626;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 8px 12px;
+    }
+    .queue-thumb {
+      width: 44px;
+      height: 58px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #000;
+      flex-shrink: 0;
+    }
+    .queue-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .queue-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 700;
+    }
+    .queue-name-input {
+      background: #0b0a14;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      width: 100%;
+    }
+    .queue-name-input:focus {
+      border-color: #1500E1;
+      box-shadow: 0 0 0 2px rgba(21, 0, 225, 0.3);
+    }
+    .queue-remove {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .upload-btn {
+      background: #34c759;
+      color: #000;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(52, 199, 89, 0.3);
+    }
+    .upload-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      display: none;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #34c759;
+      transition: width 0.2s ease;
+    }
+    .progress-text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      display: none;
+    }
+    .success-card {
+      background: rgba(52, 199, 89, 0.12);
+      border: 1px solid rgba(52, 199, 89, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      display: none;
+    }
+    .success-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #34c759;
+      margin-bottom: 4px;
+    }
+    .success-sub {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.4;
+    }
+    .view-gallery-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #1500E1;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Active Cards & Editor */
+    .editor-section {
+      background: #0f0e1a;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .editor-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .editor-tools {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .clear-btn {
+      background: rgba(255, 59, 48, 0.15);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #ff3b30;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .bulk-btn {
+      background: rgba(21, 0, 225, 0.2);
+      border: 1px solid rgba(21, 0, 225, 0.4);
+      color: #99aaff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .search-input {
+      background: #07060e;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      width: 100%;
+    }
+    .search-input:focus {
+      border-color: #3b28ff;
+    }
+    .cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+    .active-card-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #171626;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 8px 12px;
+      transition: border-color 0.2s;
+    }
+    .active-card-item:focus-within {
+      border-color: #3b28ff;
+    }
+    .active-thumb {
+      width: 44px;
+      height: 58px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #000;
+      flex-shrink: 0;
+    }
+    .active-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .active-name-input {
+      background: #0b0a14;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      outline: none;
+      width: 100%;
+    }
+    .active-name-input:focus {
+      border-color: #1500E1;
+      box-shadow: 0 0 0 2px rgba(21, 0, 225, 0.4);
+    }
+    .save-indicator {
+      font-size: 11px;
+      color: #34c759;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .save-indicator.visible {
+      opacity: 1;
+    }
+    .delete-card-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 10px;
+      background: rgba(255, 59, 48, 0.18);
+      color: #ff3b30;
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.2s ease;
+    }
+    .delete-card-btn.is-confirm {
+      background: #ff3b30;
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      min-width: 72px;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 30px 10px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo">MM</div>
+      <div class="brand-text">Mobile Sync &amp; Card Editor</div>
+    </div>
+    <div class="status-badge" id="conn-badge">
+      <span class="status-dot"></span>
+      <span>Connected to PC</span>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <h1 class="hero-title">Select Photos from Mobile</h1>
+    <p class="hero-sub">Add 10s or 100s of photos directly to the 3D gallery. Cards are automatically named pic1, pic2, pic3 with instant editing.</p>
+    
+    <input type="file" id="file-picker" class="file-input" accept="image/*" multiple>
+    <button type="button" class="picker-btn" id="open-picker-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      <span>Pick Photos from Mobile</span>
+    </button>
+  </div>
+
+  <div class="success-card" id="success-card">
+    <div class="success-title">Photos Successfully Added</div>
+    <div class="success-sub" id="success-sub">All selected photos have been sent to the 3D gallery in real-time.</div>
+    <a href="/" class="view-gallery-btn">Open 3D Gallery</a>
+  </div>
+
+  <!-- Selected Photos Queue & Name Editor -->
+  <div class="queue-section" id="queue-container" style="display: none;">
+    <div class="queue-title">
+      <span>Photos to Add</span>
+      <span id="queue-count" style="color: #3b28ff; font-weight: 800;">0 photos</span>
+    </div>
+    
+    <div class="progress-bar" id="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-text" id="progress-text">Uploading...</div>
+
+    <div class="queue-list" id="queue-list"></div>
+
+    <button type="button" class="upload-btn" id="submit-upload-btn">
+      <span>Send All Photos to 3D Gallery</span>
+    </button>
+  </div>
+
+  <!-- Active Cards & Name Editor -->
+  <div class="editor-section">
+    <div class="editor-header">
+      <div>
+        <div class="editor-title">Active Cards &amp; Name Editor</div>
+        <div id="active-count" style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px;">0 Cards in Archive</div>
+      </div>
+      <div class="editor-tools">
+        <button type="button" class="bulk-btn" id="bulk-renumber-btn" title="Renumber all cards sequentially as pic1, pic2...">Renumber pic1..N</button>
+        <button type="button" class="clear-btn" id="clear-all-btn">Remove All</button>
+      </div>
+    </div>
+
+    <input type="text" id="card-search-input" class="search-input" placeholder="Search cards by name (e.g. pic25)...">
+
+    <div class="cards-grid" id="active-cards-list">
+      <div class="empty-state">No photos added yet. Use the button above to add photos as pic1, pic2...</div>
+    </div>
+  </div>
+
+  <script>
+    const filePicker = document.getElementById('file-picker');
+    const openPickerBtn = document.getElementById('open-picker-btn');
+    const queueContainer = document.getElementById('queue-container');
+    const queueList = document.getElementById('queue-list');
+    const queueCount = document.getElementById('queue-count');
+    const submitBtn = document.getElementById('submit-upload-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const successCard = document.getElementById('success-card');
+    const successSub = document.getElementById('success-sub');
+    const activeCardsList = document.getElementById('active-cards-list');
+    const activeCount = document.getElementById('active-count');
+    const clearAllBtn = document.getElementById('clear-all-btn');
+    const bulkRenumberBtn = document.getElementById('bulk-renumber-btn');
+    const cardSearchInput = document.getElementById('card-search-input');
+
+    let selectedQueue = []; // array of { file, dataUrl, title }
+    let existingCards = [];
+    let searchFilter = '';
+
+    // Load active cards from server on init
+    async function loadActiveCards() {
+      try {
+        const res = await fetch('/api/cards');
+        const data = await res.json();
+        if (data.success) {
+          existingCards = data.cards || [];
+          renderActiveCards();
+        }
+      } catch (e) {
+        console.warn('Failed to load active cards:', e);
+      }
+    }
+
+    loadActiveCards();
+
+    // Listen for real-time SSE updates from server
+    const evtSource = new EventSource('/api/events');
+    evtSource.addEventListener('cards-updated', (e) => {
+      const data = JSON.parse(e.data);
+      if (data.cards) {
+        existingCards = data.cards;
+        renderActiveCards();
+      }
+    });
+    evtSource.addEventListener('cards-cleared', () => {
+      existingCards = [];
+      renderActiveCards();
+    });
+    evtSource.addEventListener('new-cards', (e) => {
+      const data = JSON.parse(e.data);
+      if (data.allCards) {
+        existingCards = data.allCards;
+        renderActiveCards();
+      } else {
+        loadActiveCards();
+      }
+    });
+
+    openPickerBtn.addEventListener('click', () => {
+      filePicker.click();
+    });
+
+    // High performance 4K Ultra-HD preservation for images
+    function readAndCompressImage(file, maxDimension = 4096, quality = 0.98) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let { width, height } = img;
+            // If already within 4K resolution and under 15MB, keep raw uncompressed original bytes
+            if (width <= maxDimension && height <= maxDimension && file.size < 15 * 1024 * 1024) {
+              resolve(e.target.result);
+              return;
+            }
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl);
+          };
+          img.onerror = () => resolve(e.target.result);
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    filePicker.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+
+      queueContainer.style.display = 'block';
+      progressBar.style.display = 'block';
+      progressText.style.display = 'block';
+      progressText.textContent = `Preparing ${files.length} photos...`;
+      progressFill.style.width = '20%';
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const dataUrl = await readAndCompressImage(file);
+        const nextNum = existingCards.length + selectedQueue.length + 1;
+        selectedQueue.push({
+          file,
+          dataUrl,
+          title: `pic${nextNum}`
+        });
+
+        const percent = Math.round(((i + 1) / files.length) * 100);
+        progressFill.style.width = `${percent}%`;
+        progressText.textContent = `Optimized ${i + 1} of ${files.length} photos (${percent}%)...`;
+      }
+
+      progressBar.style.display = 'none';
+      progressText.style.display = 'none';
+      renderQueue();
+      filePicker.value = '';
+    });
+
+    function renderQueue() {
+      if (selectedQueue.length === 0) {
+        queueContainer.style.display = 'none';
+        return;
+      }
+
+      queueContainer.style.display = 'block';
+      queueCount.textContent = `${selectedQueue.length} photo${selectedQueue.length > 1 ? 's' : ''}`;
+      queueList.innerHTML = '';
+
+      selectedQueue.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'queue-item';
+
+        const img = document.createElement('img');
+        img.className = 'queue-thumb';
+        img.src = item.dataUrl;
+
+        const meta = document.createElement('div');
+        meta.className = 'queue-meta';
+
+        const label = document.createElement('span');
+        label.className = 'queue-label';
+        label.textContent = `Card #${existingCards.length + index + 1} Name`;
+
+        const nameInput = document.createElement('input');
+        nameInput.className = 'queue-name-input';
+        nameInput.type = 'text';
+        nameInput.value = item.title;
+        nameInput.placeholder = `pic${existingCards.length + index + 1}`;
+        nameInput.addEventListener('input', (e) => {
+          item.title = e.target.value.trim() || `pic${existingCards.length + index + 1}`;
+        });
+
+        meta.appendChild(label);
+        meta.appendChild(nameInput);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'queue-remove';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.addEventListener('click', () => {
+          selectedQueue.splice(index, 1);
+          selectedQueue.forEach((q, idx) => {
+            if (q.title.startsWith('pic')) {
+              q.title = `pic${existingCards.length + idx + 1}`;
+            }
+          });
+          renderQueue();
+        });
+
+        row.appendChild(img);
+        row.appendChild(meta);
+        row.appendChild(removeBtn);
+        queueList.appendChild(row);
+      });
+    }
+
+    // Chunked / Batched Upload for 100s of photos
+    submitBtn.addEventListener('click', async () => {
+      if (selectedQueue.length === 0) return;
+
+      submitBtn.disabled = true;
+      progressBar.style.display = 'block';
+      progressText.style.display = 'block';
+
+      const totalPhotos = selectedQueue.length;
+      const BATCH_SIZE = 10;
+      let uploadedCount = 0;
+
+      for (let i = 0; i < totalPhotos; i += BATCH_SIZE) {
+        const batch = selectedQueue.slice(i, i + BATCH_SIZE);
+        const payloadImages = batch.map(item => ({
+          dataUrl: item.dataUrl,
+          title: item.title,
+          note: 'just another moment.',
+          year: String(new Date().getFullYear())
+        }));
+
+        const currentPercent = Math.round((i / totalPhotos) * 100);
+        progressFill.style.width = `${Math.max(10, currentPercent)}%`;
+        progressText.textContent = `Sending ${i + 1} - ${Math.min(i + BATCH_SIZE, totalPhotos)} of ${totalPhotos} photos (${currentPercent}%)...`;
+
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ images: payloadImages })
+          });
+          const data = await res.json();
+          if (!data.success) {
+            throw new Error(data.error || 'Batch upload failed');
+          }
+          uploadedCount += batch.length;
+          if (data.allCards) existingCards = data.allCards;
+        } catch (err) {
+          alert('Upload error on batch ' + (Math.floor(i / BATCH_SIZE) + 1) + ': ' + err.message);
+          submitBtn.disabled = false;
+          return;
+        }
+      }
+
+      progressFill.style.width = '100%';
+      progressText.textContent = `All ${totalPhotos} photos uploaded successfully!`;
+
+      successSub.textContent = `Successfully added ${totalPhotos} photos to the 3D gallery!`;
+      successCard.style.display = 'block';
+      selectedQueue = [];
+      renderQueue();
+      renderActiveCards();
+
+      setTimeout(() => {
+        progressBar.style.display = 'none';
+        progressText.style.display = 'none';
+        submitBtn.disabled = false;
+      }, 2000);
+    });
+
+    let currentLimit = 36;
+
+    cardSearchInput.addEventListener('input', (e) => {
+      searchFilter = e.target.value.toLowerCase().trim();
+      currentLimit = 36;
+      renderActiveCards();
+    });
+
+    function renderActiveCards() {
+      activeCount.textContent = `${existingCards.length} Card${existingCards.length !== 1 ? 's' : ''} in Archive`;
+      activeCardsList.innerHTML = '';
+
+      if (existingCards.length === 0) {
+        activeCardsList.innerHTML = '<div class="empty-state">No photos added yet. Use the button above to add photos as pic1, pic2...</div>';
+        return;
+      }
+
+      const filtered = searchFilter 
+        ? existingCards.filter(c => (c.title || '').toLowerCase().includes(searchFilter))
+        : existingCards;
+
+      if (filtered.length === 0) {
+        activeCardsList.innerHTML = '<div class="empty-state">No cards match your search.</div>';
+        return;
+      }
+
+      const visibleSlice = filtered.slice(0, currentLimit);
+
+      visibleSlice.forEach((card) => {
+        const index = existingCards.findIndex(c => c.id === card.id);
+        const item = document.createElement('div');
+        item.className = 'active-card-item';
+
+        const img = document.createElement('img');
+        img.className = 'active-thumb';
+        img.src = card.cover || card.image || card.imageSmall;
+        img.loading = 'lazy';
+
+        const meta = document.createElement('div');
+        meta.className = 'active-meta';
+
+        const label = document.createElement('span');
+        label.className = 'queue-label';
+        label.textContent = `Card #${index + 1} Name`;
+
+        const nameInput = document.createElement('input');
+        nameInput.className = 'active-name-input';
+        nameInput.type = 'text';
+        nameInput.value = card.title || `pic${index + 1}`;
+
+        const saveIndicator = document.createElement('span');
+        saveIndicator.className = 'save-indicator';
+        saveIndicator.textContent = 'Saved';
+
+        let debounceTimer = null;
+        nameInput.addEventListener('input', (e) => {
+          const newName = e.target.value.trim() || `pic${index + 1}`;
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(async () => {
+            try {
+              const res = await fetch('/api/cards/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: card.id, title: newName })
+              });
+              const d = await res.json();
+              if (d.success) {
+                card.title = newName;
+                saveIndicator.classList.add('visible');
+                setTimeout(() => saveIndicator.classList.remove('visible'), 1500);
+              }
+            } catch (err) {
+              console.error('Failed to update card title:', err);
+            }
+          }, 350);
+        });
+
+        meta.appendChild(label);
+        meta.appendChild(nameInput);
+        meta.appendChild(saveIndicator);
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'delete-card-btn';
+        delBtn.innerHTML = '<span>&times;</span>';
+        delBtn.title = 'Tap to remove';
+
+        let isConfirming = false;
+        let confirmTimer = null;
+
+        const handleDelete = async (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+
+          if (!isConfirming) {
+            isConfirming = true;
+            delBtn.classList.add('is-confirm');
+            delBtn.innerHTML = '<span>DELETE?</span>';
+            confirmTimer = setTimeout(() => {
+              isConfirming = false;
+              delBtn.classList.remove('is-confirm');
+              delBtn.innerHTML = '<span>&times;</span>';
+            }, 3500);
+            return;
+          }
+
+          clearTimeout(confirmTimer);
+          delBtn.disabled = true;
+          delBtn.innerHTML = '<span>...</span>';
+
+          // Immediate optimistic visual removal
+          item.style.transition = 'all 0.25s ease';
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.85)';
+          setTimeout(() => item.remove(), 250);
+
+          const delIdx = existingCards.findIndex(c => c.id === card.id);
+          if (delIdx !== -1) {
+            existingCards.splice(delIdx, 1);
+          }
+          activeCount.textContent = `${existingCards.length} Card${existingCards.length !== 1 ? 's' : ''} in Archive`;
+
+          try {
+            await fetch('/api/cards/delete', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: card.id })
+            });
+          } catch (err) {
+            console.error('Failed to delete card:', err);
+          }
+        };
+
+        delBtn.addEventListener('click', handleDelete);
+        delBtn.addEventListener('touchend', handleDelete);
+
+        item.appendChild(img);
+        item.appendChild(meta);
+        item.appendChild(delBtn);
+        activeCardsList.appendChild(item);
+      });
+
+      if (filtered.length > currentLimit) {
+        const loadMoreBtn = document.createElement('button');
+        loadMoreBtn.type = 'button';
+        loadMoreBtn.className = 'bulk-btn';
+        loadMoreBtn.style.cssText = 'width: 100%; padding: 14px; margin-top: 16px; font-size: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; cursor: pointer;';
+        loadMoreBtn.textContent = `Load More Photos (${currentLimit} of ${filtered.length} shown)`;
+        loadMoreBtn.addEventListener('click', () => {
+          currentLimit += 36;
+          renderActiveCards();
+        });
+        activeCardsList.appendChild(loadMoreBtn);
+      }
+    }
+
+    bulkRenumberBtn.addEventListener('click', async () => {
+      if (existingCards.length === 0) return;
+      if (confirm(`Renumber all ${existingCards.length} cards sequentially as pic1, pic2, pic3...?`)) {
+        for (let i = 0; i < existingCards.length; i++) {
+          const card = existingCards[i];
+          const newTitle = `pic${i + 1}`;
+          card.title = newTitle;
+          await fetch('/api/cards/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: card.id, title: newTitle })
+          });
+        }
+        renderActiveCards();
+      }
+    });
+
+    clearAllBtn.addEventListener('click', async () => {
+      if (existingCards.length === 0) return;
+      if (confirm('Are you sure you want to remove ALL cards and start completely fresh?')) {
+        try {
+          const res = await fetch('/api/cards/clear', { method: 'POST' });
+          const d = await res.json();
+          if (d.success) {
+            existingCards = [];
+            renderActiveCards();
+          }
+        } catch (e) {
+          alert('Failed to clear cards');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

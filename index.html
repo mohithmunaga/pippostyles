@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MM | Digital Memories & Visual Archive</title>
+  <meta name="description" content="A curated digital showcase and interactive 3D gallery celebrating moments, creators, and visual memories.">
+  <base href="/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/src/pippostyles-intro.css">
+  
+  <!-- Local High-Performance Vendor Libraries (Zero CDN Latency) -->
+  <script src="/assets/vendor/three.min.js"></script>
+  <script src="/assets/vendor/GLTFLoader.js"></script>
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/assets/vendor/lenis.min.js"></script>
+</head>
+<body>
+  <div id="app-shell" class="app-shell">
+    <!-- Signature Electric Blue background overlay -->
+    <div class="app-bg" aria-hidden="true"></div>
+    
+
+
+    <!-- Custom Mix-Blend Cursor -->
+    <div id="app-cursor" class="cursor" aria-hidden="true"></div>
+
+    <!-- SVG Liquid Wave Distortion Filter -->
+    <svg class="svg-wave-defs" aria-hidden="true" style="position: fixed; width: 0; height: 0; pointer-events: none; overflow: hidden;">
+      <defs>
+        <filter id="scroll-wave-filter" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" id="wave-turbulence" baseFrequency="0.012 0.035" numOctaves="2" result="noise" />
+          <feDisplacementMap id="wave-displacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- WebGL Canvas for 3D Portfolio -->
+    <canvas id="webgl-canvas" class="webgl" aria-hidden="true"></canvas>
+
+    <!-- Overlay content with difference mix blend -->
+    <div class="app-blend-scope">
+      
+      <!-- Interactive Layout Switches -->
+      <div class="layout-switch" id="layout-switch">
+        <span class="layout-switch__pill" aria-hidden="true"></span>
+        <button type="button" class="layout-switch__btn is-active" id="btn-rings" data-hover>Rings</button>
+        <button type="button" class="layout-switch__btn" id="btn-spiral" data-hover>Spiral</button>
+      </div>
+
+      <!-- Custom metadata label following the cursor on 3D hover -->
+      <div class="project-label" id="project-label" aria-hidden="true">
+        <div class="project-label__pill" id="project-label-pill">
+          <svg class="project-label__arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <div class="project-label__text">
+            <span class="project-label__title" id="project-label-title">Moment</span>
+            <span class="project-label__category" id="project-label-category">Palak Silawat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation System -->
+      <nav class="nav" id="app-nav">
+        <div class="nav__logo">
+          <a href="/" data-route aria-label="MM Home">
+            <svg class="nav__logo-img nav__logo-mm" width="90" height="32" viewBox="0 0 90 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0H12.95L20.57 15.62L28.19 0H41.14V31.25H28.19V15.62L20.57 31.25L12.95 15.62V31.25H0V0ZM48 0H60.95L68.57 15.62L76.19 0H89.14V31.25H76.19V15.62L68.57 31.25L60.95 15.62V31.25H48V0Z" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+        <ul class="nav__links">
+          <li>
+            <a href="/works" class="nav__link" id="nav-link-works-btn" data-route data-hover>
+              <span class="nav__link-dot"></span>
+              <span class="nav__link-text" id="nav-link-works">All Pics</span>
+            </a>
+          </li>
+          <li>
+            <a href="/studio" class="nav__link" id="nav-link-studio-btn" data-route data-hover>
+              <span class="nav__link-dot"></span>
+              <span class="nav__link-text" id="nav-link-studio">Story</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contacts" class="nav__link" id="nav-link-contacts-btn" data-route data-hover>
+              <span class="nav__link-dot"></span>
+              <span class="nav__link-text" id="nav-link-contacts">Contact</span>
+            </a>
+          </li>
+          <li class="nav__lang">
+            <button class="nav__lang-btn" id="lang-hi">HI</button>
+            <span class="nav__lang-sep" aria-hidden="true">/</span>
+            <button class="nav__lang-btn is-active" id="lang-en">EN</button>
+          </li>
+        </ul>
+        <button class="nav__menu-btn" id="menu-toggle-btn" aria-label="Toggle navigation">
+          <span class="nav__btn-spacer" aria-hidden="true">✕ CLOSE</span>
+          <span class="nav__btn-phrase nav__btn-phrase--menu">
+            <span class="nav__btn-char" style="--i:0;"><span class="nav__menu-dot"></span></span>
+            <span class="nav__btn-char" style="--i:1;"><span>M</span></span>
+            <span class="nav__btn-char" style="--i:2;"><span>E</span></span>
+            <span class="nav__btn-char" style="--i:3;"><span>N</span></span>
+            <span class="nav__btn-char" style="--i:4;"><span>U</span></span>
+          </span>
+          <span class="nav__btn-phrase nav__btn-phrase--close">
+            <span class="nav__btn-char" style="--i:0;"><span>✕</span></span>
+            <span class="nav__btn-char" style="--i:1;"><span>C</span></span>
+            <span class="nav__btn-char" style="--i:2;"><span>L</span></span>
+            <span class="nav__btn-char" style="--i:3;"><span>O</span></span>
+            <span class="nav__btn-char" style="--i:4;"><span>S</span></span>
+            <span class="nav__btn-char" style="--i:5;"><span>E</span></span>
+          </span>
+        </button>
+      </nav>
+
+      <!-- Full-screen Mobile Navigation Overlay -->
+      <div class="nav__mobile-overlay" id="mobile-overlay" aria-hidden="true">
+        <ul class="nav__mobile-links">
+          <li><a href="/" data-route class="nav__mobile-link" id="mobile-link-home">Home</a></li>
+          <li><a href="/works" data-route class="nav__mobile-link" id="mobile-link-works">All Pics</a></li>
+          <li><a href="/studio" data-route class="nav__mobile-link" id="mobile-link-studio">Story</a></li>
+          <li><a href="/contacts" data-route class="nav__mobile-link" id="mobile-link-contacts">Contact</a></li>
+        </ul>
+        <div class="nav__mobile-lang">
+          <button class="nav__mobile-lang-btn" id="mobile-lang-hi">HI</button>
+          <span class="nav__mobile-lang-sep" aria-hidden="true">/</span>
+          <button class="nav__mobile-lang-btn is-active" id="mobile-lang-en">EN</button>
+        </div>
+        <div class="nav__mobile-social">
+          <a href="https://instagram.com/pippostyles" target="_blank" rel="noopener noreferrer" class="nav__mobile-social-link">@pippostyles</a>
+          <a href="https://instagram.com/palaksilawat" target="_blank" rel="noopener noreferrer" class="nav__mobile-social-link">@palaksilawat</a>
+        </div>
+      </div>
+
+      <!-- Client Side SPA dynamic mounting layer -->
+      <div class="app-page" id="app-page"></div>
+
+      <!-- Full-screen page slide transition layer -->
+      <div class="transition-layer" id="transition-layer"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

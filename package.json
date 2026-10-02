@@ -1,0 +1,14 @@
+{
+  "name": "k95-clone",
+  "version": "1.0.0",
+  "description": "High precision clone of Studio K95 website",
+  "main": "src/main.js",
+  "scripts": {
+    "download-assets": "node scripts/download_assets.js",
+    "start": "npx browser-sync start --server --files \"*.html, *.css, src/**/*.js\" --port 3000"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}

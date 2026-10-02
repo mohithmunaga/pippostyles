@@ -1,0 +1,330 @@
+/* ==========================================================================
+   PIPPOSTYLES CINEMATIC LUXURY LOGO INTRO
+   Replicating the exact motion design of:
+   https://cdn.dribbble.com/userupload/4474505/file/original-be9c772bd2d5bd76ff923a3ec7b60684.mp4
+
+   Key Characteristics:
+   1. Colossal letters that fill and bleed beyond the full screen edge-to-edge
+   2. Buttery-smooth, luxurious, high-fashion motion easing
+   3. Authentic letters of pippostyles ('p' -> 'o' -> 's')
+   4. Signature electric blue background: HEX #1500E1
+   5. Kinetic slit-scan assembly into pure lowercase "pippostyles"
+   6. Ultra-clean: ZERO clutter, ZERO badges, ZERO buttons, ZERO slashes/spaces
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&display=swap');
+
+body.has-intro {
+  overflow: hidden !important;
+}
+
+.ps-intro {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-color: #1500E1;
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-variation-settings: normal !important;
+}
+
+/* Signature solid electric blue (#1500E1) */
+.ps-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #1500E1;
+  pointer-events: none;
+}
+
+/* Subtle, ultra-soft radial energy vignette behind the stage */
+.ps-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, rgba(21, 0, 225, 0) 75%);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ELEGANT DIGITAL TYPEWRITER INTRO STAGE
+   "Hi, welcome to the archive."
+   ========================================================================== */
+.ps-typing-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ps-typing-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 90vw;
+  padding: 0 clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+}
+
+.ps-typing-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(24px, 4.4vw, 56px);
+  font-weight: 600 !important;
+  font-variation-settings: "wght" 600 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #FFFFFF;
+  white-space: pre-wrap;
+  user-select: none;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.22));
+}
+
+.ps-typing-cursor {
+  display: inline-block;
+  width: clamp(2.5px, 0.28vw, 4px);
+  height: clamp(26px, 4.2vw, 52px);
+  background-color: #FFFFFF;
+  margin-left: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
+  animation: ps-cursor-blink 0.85s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity;
+}
+
+@keyframes ps-cursor-blink {
+  0%, 45% {
+    opacity: 1;
+  }
+  50%, 95% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   COLOSSAL FULL-SCREEN LUXURY MACRO SCENES
+   Letters cover and fill the full screen edge-to-edge
+   ========================================================================== */
+.ps-macro-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.ps-lux-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Colossal letter styling: fills and bleeds off the entire screen */
+.ps-lux-letter {
+  position: absolute;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  color: #FFFFFF;
+  text-transform: lowercase;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 30px 80px rgba(0, 0, 0, 0.32));
+  will-change: transform, opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Colossal 'p' (sweeping circular bowl & monolithic stem) */
+.ps-lux-letter--p {
+  font-size: clamp(850px, 120vw, 1750px);
+}
+
+/* Colossal 'i' (monumental dot & monolithic pillar perfectly framed) */
+.ps-lux-letter--i {
+  font-size: clamp(580px, 82vw, 1150px);
+  line-height: 0.9;
+}
+
+/* Colossal 'o' (pure monumental geometric circle filling the screen) */
+.ps-lux-letter--o {
+  font-size: clamp(850px, 120vw, 1750px);
+}
+
+/* ==========================================================================
+   PRE-TEXT LETTER FLOW STAGE (Bold Monkey energetic flow language)
+   ========================================================================== */
+.ps-flow-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 8;
+  overflow: hidden;
+}
+
+.ps-flow-wordmark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.28));
+  will-change: transform, opacity;
+}
+
+.ps-flow-char {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(56px, 11.5vw, 160px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  color: #FFFFFF;
+  text-transform: lowercase;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   MASTER ASSEMBLY STAGE: Strictly "pippostyles"
+   ========================================================================== */
+.ps-master-stage {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 clamp(16px, 4vw, 40px);
+  will-change: transform, opacity;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ps-wordmark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: none !important;
+}
+
+/* Base typography applied equally to all representations */
+.ps-typography {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(56px, 11.5vw, 160px);
+  font-weight: 800 !important;
+  font-variation-settings: "wght" 800 !important;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  color: #FFFFFF;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+/* Solid Unsplit Wordmark: the final seamless lockup */
+.ps-solid {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(56px, 11.5vw, 160px);
+  font-weight: 800 !important;
+  font-variation-settings: "wght" 800 !important;
+  letter-spacing: -0.04em;
+  opacity: 0;
+  filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.28));
+  transform: none !important;
+}
+
+/* Halves container during the kinetic slit-scan */
+.ps-halves {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: opacity;
+}
+
+.ps-half {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+/* Top half clipped to top 51% (with 1% overlap to avoid hairline subpixel gap) */
+.ps-half--top {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 49% 0);
+}
+
+/* Bottom half clipped to bottom 51% */
+.ps-half--bottom {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(49% 0 0 0);
+}
+
+.ps-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Fusion laser beam line */
+.ps-seam {
+  position: absolute;
+  top: 50%;
+  left: -6%;
+  width: 112%;
+  height: 3px;
+  background: #FFFFFF;
+  box-shadow: 0 0 10px #FFFFFF, 0 0 25px rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  transform-origin: center center;
+  transform: translateY(-50%) scaleX(0);
+  opacity: 0;
+  will-change: transform, opacity;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background: #1500E1;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: sans-serif;
+    }
+    svg {
+      width: 95vw;
+      max-width: 1200px;
+      height: auto;
+      filter: drop-shadow(0 15px 35px rgba(0,0,0,0.35));
+    }
+  </style>
+</head>
+<body>
+  <svg viewBox="0 0 1200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Letter P (Width: 78, Height: 140) -->
+      <g id="g-P">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0 H52 C70 0 78 12 78 36 C78 60 70 72 52 72 H24 V140 H0 Z M24 22 H48 C56 22 58 26 58 36 C58 46 56 50 48 50 H24 Z" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter I (Width: 24, Height: 140) -->
+      <g id="g-I">
+        <rect x="0" y="0" width="24" height="140" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter O (Width: 88, Height: 140) -->
+      <g id="g-O">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M44 0 C68 0 88 30 88 70 C88 110 68 140 44 140 C20 140 0 110 0 70 C0 30 20 0 44 0 Z M44 24 C56 24 64 44 64 70 C64 96 56 116 44 116 C32 116 24 96 24 70 C24 44 32 24 44 24 Z" fill="#FFFFFF"/>
+      </g>
+      <!-- Accent Slash (Width: 36, Height: 140) -->
+      <g id="g-SLASH">
+        <polygon points="18,0 36,0 18,140 0,140" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter S (Width: 76, Height: 140) -->
+      <g id="g-S">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M72 30 L50 38 C48 27 42 22 36 22 C28 22 24 26 24 32 C24 39 30 43 46 48 C66 54 76 64 76 86 C76 118 52 140 32 140 C14 140 2 126 0 104 L22 96 C24 109 30 118 38 118 C46 118 52 112 52 104 C52 95 46 91 30 86 C12 80 0 72 0 52 C0 22 22 0 44 0 C62 0 70 12 72 30 Z" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter T (Width: 76, Height: 140) -->
+      <g id="g-T">
+        <polygon points="0,0 76,0 76,24 50,24 50,140 26,140 26,24 0,24" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter Y (Width: 76, Height: 140) -->
+      <g id="g-Y">
+        <polygon points="0,0 26,66 26,140 50,140 50,66 76,0 50,0 38,36 26,0" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter L (Width: 68, Height: 140) -->
+      <g id="g-L">
+        <polygon points="0,0 24,0 24,116 68,116 68,140 0,140" fill="#FFFFFF"/>
+      </g>
+      <!-- Letter E (Width: 68, Height: 140) -->
+      <g id="g-E">
+        <polygon points="0,0 68,0 68,24 24,24 24,58 62,58 62,82 24,82 24,116 68,116 68,140 0,140" fill="#FFFFFF"/>
+      </g>
+
+      <!-- Clip Top (Y <= 140) -->
+      <clipPath id="test-clip-top">
+        <rect x="0" y="0" width="1200" height="140" />
+      </clipPath>
+      <!-- Clip Bottom (Y >= 140) -->
+      <clipPath id="test-clip-bottom">
+        <rect x="0" y="140" width="1200" height="140" />
+      </clipPath>
+    </defs>
+
+    <!-- Top Halves -->
+    <g clip-path="url(#test-clip-top)">
+      <g transform="translate(112, 70)"><use href="#g-P"/></g>
+      <g transform="translate(204, 70)"><use href="#g-I"/></g>
+      <g transform="translate(242, 70)"><use href="#g-P"/></g>
+      <g transform="translate(334, 70)"><use href="#g-P"/></g>
+      <g transform="translate(426, 70)"><use href="#g-O"/></g>
+      <g transform="translate(528, 70)"><use href="#g-SLASH"/></g>
+      <g transform="translate(578, 70)"><use href="#g-S"/></g>
+      <g transform="translate(668, 70)"><use href="#g-T"/></g>
+      <g transform="translate(758, 70)"><use href="#g-Y"/></g>
+      <g transform="translate(848, 70)"><use href="#g-L"/></g>
+      <g transform="translate(930, 70)"><use href="#g-E"/></g>
+      <g transform="translate(1012, 70)"><use href="#g-S"/></g>
+    </g>
+
+    <!-- Bottom Halves -->
+    <g clip-path="url(#test-clip-bottom)">
+      <g transform="translate(112, 70)"><use href="#g-P"/></g>
+      <g transform="translate(204, 70)"><use href="#g-I"/></g>
+      <g transform="translate(242, 70)"><use href="#g-P"/></g>
+      <g transform="translate(334, 70)"><use href="#g-P"/></g>
+      <g transform="translate(426, 70)"><use href="#g-O"/></g>
+      <g transform="translate(528, 70)"><use href="#g-SLASH"/></g>
+      <g transform="translate(578, 70)"><use href="#g-S"/></g>
+      <g transform="translate(668, 70)"><use href="#g-T"/></g>
+      <g transform="translate(758, 70)"><use href="#g-Y"/></g>
+      <g transform="translate(848, 70)"><use href="#g-L"/></g>
+      <g transform="translate(930, 70)"><use href="#g-E"/></g>
+      <g transform="translate(1012, 70)"><use href="#g-S"/></g>
+    </g>
+
+    <!-- Midline Seam -->
+    <line x1="80" y1="140" x2="1120" y2="140" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.6"/>
+  </svg>
+</body>
+</html>

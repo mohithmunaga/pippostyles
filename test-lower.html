@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@800&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #1500E1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', 'Syne', sans-serif;
+    }
+
+    .wordmark-container {
+      position: relative;
+      user-select: none;
+    }
+
+    .wordmark-half {
+      display: flex;
+      font-size: clamp(48px, 9vw, 130px);
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .wordmark-half--top {
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    }
+
+    .wordmark-half--bottom {
+      position: absolute;
+      top: 0;
+      left: 0;
+      clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    }
+
+    .char {
+      display: inline-block;
+      will-change: transform;
+    }
+
+    .seam {
+      position: absolute;
+      top: 50%;
+      left: -5%;
+      width: 110%;
+      height: 2px;
+      background: #FFFFFF;
+      box-shadow: 0 0 12px #FFFFFF, 0 0 24px rgba(255,255,255,0.8);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wordmark-container">
+    <div class="wordmark-half wordmark-half--top" id="half-top">
+      <span class="char">p</span>
+      <span class="char">i</span>
+      <span class="char">p</span>
+      <span class="char">p</span>
+      <span class="char">o</span>
+      <span class="char">s</span>
+      <span class="char">t</span>
+      <span class="char">y</span>
+      <span class="char">l</span>
+      <span class="char">e</span>
+      <span class="char">s</span>
+    </div>
+    <div class="wordmark-half wordmark-half--bottom" id="half-bottom">
+      <span class="char">p</span>
+      <span class="char">i</span>
+      <span class="char">p</span>
+      <span class="char">p</span>
+      <span class="char">o</span>
+      <span class="char">s</span>
+      <span class="char">t</span>
+      <span class="char">y</span>
+      <span class="char">l</span>
+      <span class="char">e</span>
+      <span class="char">s</span>
+    </div>
+    <div class="seam" id="seam"></div>
+  </div>
+</body>
+</html>
