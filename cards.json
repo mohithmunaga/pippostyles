@@ -108,24 +108,6 @@
     "aspectRatio": "3:4"
   },
   {
-    "id": "card-11",
-    "slug": "pic11",
-    "title": "pic11",
-    "client": "Palak Silawat",
-    "note": "just another moment.",
-    "summary": "A collection of moments, photographs, and memories kept here, one frame at a time.",
-    "year": "2026",
-    "month": "2026",
-    "image": "/assets/images/pic_1787990066682_1.jpg",
-    "imageSmall": "/assets/images/pic_1787990066682_1.jpg",
-    "cover": "/assets/images/pic_1787990066682_1.jpg",
-    "category": "Moments",
-    "categories": [
-      "Moments"
-    ],
-    "aspectRatio": "3:4"
-  },
-  {
     "id": "card-12",
     "slug": "pic12",
     "title": "pic12",
