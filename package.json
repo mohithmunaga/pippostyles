@@ -1,9 +1,0 @@
-{
-  "name": "pippostyles",
-  "version": "1.0.0",
-  "description": "pippostyles - Digital Memories & Visual Archive",
-  "scripts": {
-    "build": "echo Static build complete",
-    "start": "node scripts/server.js"
-  }
-}
