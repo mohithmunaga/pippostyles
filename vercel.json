@@ -3,9 +3,9 @@
   "rewrites": [
     { "source": "/api/cards", "destination": "/cards.json" },
     { "source": "/intro", "destination": "/intro.html" },
-    { "source": "/works", "destination": "/" },
-    { "source": "/studio", "destination": "/" },
-    { "source": "/contacts", "destination": "/" },
-    { "source": "/projects/:path*", "destination": "/" }
+    { "source": "/works", "destination": "/index.html" },
+    { "source": "/studio", "destination": "/index.html" },
+    { "source": "/contacts", "destination": "/index.html" },
+    { "source": "/projects/:path*", "destination": "/index.html" }
   ]
 }

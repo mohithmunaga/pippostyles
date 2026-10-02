@@ -1,14 +1,9 @@
 {
-  "name": "k95-clone",
+  "name": "pippostyles",
   "version": "1.0.0",
-  "description": "High precision clone of Studio K95 website",
-  "main": "src/main.js",
+  "description": "pippostyles - Digital Memories & Visual Archive",
   "scripts": {
-    "download-assets": "node scripts/download_assets.js",
+    "build": "echo Static build complete",
     "start": "node server.js"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "browser-sync": "^3.0.3"
   }
 }
