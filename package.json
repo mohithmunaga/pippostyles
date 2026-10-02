@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "download-assets": "node scripts/download_assets.js",
-    "start": "npx browser-sync start --server --files \"*.html, *.css, src/**/*.js\" --port 3000"
+    "start": "node server.js"
   },
   "dependencies": {},
   "devDependencies": {

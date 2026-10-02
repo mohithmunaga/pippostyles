@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/cards", "destination": "/cards.json" },
+    { "source": "/intro", "destination": "/intro.html" },
+    { "source": "/works", "destination": "/index.html" },
+    { "source": "/studio", "destination": "/index.html" },
+    { "source": "/contacts", "destination": "/index.html" },
+    { "source": "/projects/:slug*", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}

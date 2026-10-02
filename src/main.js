@@ -913,13 +913,23 @@ async function renderProjectDetail(slug) {
   let currentCards = getAllCards();
   if (currentCards.length === 0) {
     try {
-      const res = await fetch('/api/cards');
+      const res = await fetch('/api/cards').catch(() => fetch('/cards.json'));
       const d = await res.json();
-      if (d.cards && d.cards.length > 0) {
-        setAllCards(d.cards);
-        currentCards = d.cards;
+      const list = Array.isArray(d) ? d : (d.cards || []);
+      if (list.length > 0) {
+        setAllCards(list);
+        currentCards = list;
       }
-    } catch (e) {}
+    } catch (e) {
+      try {
+        const res2 = await fetch('/cards.json');
+        const list2 = await res2.json();
+        if (Array.isArray(list2) && list2.length > 0) {
+          setAllCards(list2);
+          currentCards = list2;
+        }
+      } catch (err) {}
+    }
   }
   const t = translations[currentLang] || translations.en;
   let currentIndex = currentCards.findIndex(item => item.slug === slug || item.id === slug || String(item.id).includes(slug));
@@ -1216,16 +1226,27 @@ async function initRealtimeSync() {
 
   // 1. Initial Load from server
   try {
-    const res = await fetch('/api/cards');
+    const res = await fetch('/api/cards').catch(() => fetch('/cards.json'));
     const data = await res.json();
-    if (data.success && Array.isArray(data.cards)) {
-      setAllCards(data.cards);
+    const list = Array.isArray(data) ? data : (data.cards || []);
+    if (list.length > 0) {
+      setAllCards(list);
       rebuildCylinderPanels();
       if (currentRoute === '/works') {
         renderWorks();
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    try {
+      const res2 = await fetch('/cards.json');
+      const list2 = await res2.json();
+      if (Array.isArray(list2) && list2.length > 0) {
+        setAllCards(list2);
+        rebuildCylinderPanels();
+        if (currentRoute === '/works') renderWorks();
+      }
+    } catch (err) {}
+  }
 
   // 2. Real-time SSE stream
   try {

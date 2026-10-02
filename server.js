@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
 const UPLOAD_DIR = path.join(ROOT_DIR, 'assets', 'images');
 
@@ -411,12 +411,14 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`======================================================\n`);
 });
 
-introServer.listen(INTRO_PORT, '0.0.0.0', () => {
-  const localIp = getLocalIp();
-  console.log(`======================================================`);
-  console.log(`🎬 Pippostyles Intro Animation Server Running!`);
-  console.log(`💻 Intro (PC):     http://localhost:${INTRO_PORT}`);
-  console.log(`📱 Intro (Mobile): http://${localIp}:${INTRO_PORT}`);
-  console.log(`======================================================\n`);
-});
+if (!process.env.PORT) {
+  introServer.listen(INTRO_PORT, '0.0.0.0', () => {
+    const localIp = getLocalIp();
+    console.log(`======================================================`);
+    console.log(`🎬 Pippostyles Intro Animation Server Running!`);
+    console.log(`💻 Intro (PC):     http://localhost:${INTRO_PORT}`);
+    console.log(`📱 Intro (Mobile): http://${localIp}:${INTRO_PORT}`);
+    console.log(`======================================================\n`);
+  });
+}
 
