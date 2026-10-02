@@ -4,6 +4,6 @@
   "description": "pippostyles - Digital Memories & Visual Archive",
   "scripts": {
     "build": "echo Static build complete",
-    "start": "node server.js"
+    "start": "node scripts/server.js"
   }
 }
